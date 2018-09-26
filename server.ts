@@ -4,6 +4,8 @@ import * as bodyParser from "body-parser";
 import * as passport from "passport";
 import * as config from "./config/config";
 import * as http from "http";
+import * as fs from "fs";
+import * as path from "path";
 import {Auth} from "./auth/auth";
 import {Models} from "./models";
 import {Router} from "./routes/index";
@@ -60,10 +62,10 @@ export class Server {
             // Initialize Database then bootstrap application
             try {
                 await Server.initializeDatabase();
-
+               // create a user to login.
                // const user = new UserManager(); 
                // user.createUser('admin@gmail.com','99032', 'admin', 'Admin', RoleEnum.ADMIN, '');
-                
+               logger.error(" something very dangerous happened serverstarted");
             } catch(error) {
                 logger.error("Failed to initialize database", error);
             }
@@ -109,16 +111,12 @@ export class Server {
         Server.app.use(bodyParser.urlencoded({ extended: true }));
         Server.app.use(bodyParser.json());
         Server.app.use(compression());
-        Server.app.use(morgan('dev', {
-            skip: function (req, res) {
-                return res.statusCode < 400;
-            }, stream: process.stderr
-        }));
+        // Server.app.use(morgan('dev', {
+        //     skip: function (req, res) {
+        //         return res.statusCode < 400;
+        //     }, stream: fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' }) || process.stderr
+        // }));
 
-        Server.app.use(morgan('dev', {
-            skip: function (req, res) {
-                return res.statusCode >= 400;
-            }, stream: process.stdout
-        }));
+        Server.app.use(morgan('dev', {  "stream": logger.stream  }));
     }
 }

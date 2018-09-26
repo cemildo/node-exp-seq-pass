@@ -11,7 +11,7 @@ export const development = {
     // "logging": false
     dialect: "sqlite",
     storage: './sqlite.db',
-    logging: true
+    
 };
 
 export const test = {

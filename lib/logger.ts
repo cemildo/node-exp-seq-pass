@@ -2,15 +2,34 @@ import moment = require("moment");
 
 const winston = require("winston");
 
-const level = process.env.LOG_LEVEL || 'debug';
+const level =   process.env.LOG_LEVEL ||  'debug';
 
-export const logger = new winston.Logger({
+const logger = new winston.Logger({ 
     transports: [
+        new winston.transports.File({
+            level: 'info',
+            filename: `./logs/${moment().format('YYYY-MM-DD')}.log`,
+            handleExceptions: false,
+            json: false,
+            maxsize: 5242880, // 5MB
+            maxFiles: 5,
+            colorize: false
+        }),
         new winston.transports.Console({
-            level: level,
-            timestamp: function () {
-                return moment().format('YYYY-MM-DD hh:mm:ss').trim();
-            }
+            timestamp: true,
+            level: 'debug',
+            handleExceptions: true,
+            json: false,
+            colorize: true,
         })
-    ]
+    ],
+    exitOnError: false
 });
+
+logger.stream = {
+    write: function(message, encoding){
+        logger.info(message);
+    }
+};
+ 
+export { logger };
