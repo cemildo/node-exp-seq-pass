@@ -1,5 +1,5 @@
 import {
-    Column, CreatedAt, Default, DeletedAt, IsUUID, Model, PrimaryKey, DataType, Table,
+    Column, CreatedAt, Default, DeletedAt, IsUUID, Model, PrimaryKey, DataType, Table, AllowNull,
     UpdatedAt
 } from 'sequelize-typescript';
 
@@ -12,12 +12,18 @@ export class BaseModel<T> extends Model<T> {
     @Column(DataType.UUID)
     id: string;
 
+    @AllowNull(true)
+    @Column
     @CreatedAt
     creationDate: Date;
 
+    @AllowNull(true)
+    @Column
     @UpdatedAt
     updatedOn: Date;
 
+    @AllowNull(true)
+    @Column
     @DeletedAt
     deletionDate: Date;
 }

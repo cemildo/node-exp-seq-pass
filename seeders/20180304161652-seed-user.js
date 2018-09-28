@@ -2,26 +2,27 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
+    // PASS : 99032 => '$2a$10$NUckPE1ErB7SRKVeeKKYcOQPvbb7HJQ7mXC5xpuz.fC1kQ3QucGL2',
     return queryInterface.bulkInsert('User', [
         {
-            id: '87cf44fe-cc1f-4fa7-a936-d15dbb122bcc',
-            firstName: 'Test',
+            id: '10e0e993-b796-4168-b017-2b15b164086c',
+            firstName: 'Admin',
             lastName: 'Admin',
-            email: 'test.admin@gmail.com',
-            password: '$2a$10$xYkomxBysjVimxtP7flrTee/iiueeZp5e/FRmu9NKyTpeLpS7O43a',
+            email: 'admin@gmail.com',
+            password: '$2a$10$NUckPE1ErB7SRKVeeKKYcOQPvbb7HJQ7mXC5xpuz.fC1kQ3QucGL2',
             role: 'admin',
-            creationDate: '1986-07-16 04:05:06',
-            updatedOn: '1999-01-08 04:05:06'
+            creationDate: new Date(),
+            updatedOn: new Date(),
         },
         {
-            id: '436e49ad-3b04-40d6-b8da-f6d26f45ed17',
+            id: '10e0e993-b796-4168-b017-2b15b164086f',
             firstName: 'Test',
             lastName: 'Member',
-            email: 'test.member@gmail.com',
-            password: '$2a$10$xYkomxBysjVimxtP7flrTee/iiueeZp5e/FRmu9NKyTpeLpS7O43a',
+            email: 'member@gmail.com',
+            password: '$2a$10$NUckPE1ErB7SRKVeeKKYcOQPvbb7HJQ7mXC5xpuz.fC1kQ3QucGL2',
             role: 'member',
-            creationDate: '1988-01-08 04:05:06',
-            updatedOn: '1999-01-08 04:05:06'
+            creationDate: new Date(),
+            updatedOn: new Date(),
         }], {});
   },
 

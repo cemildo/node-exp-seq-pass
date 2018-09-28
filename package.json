@@ -1,8 +1,8 @@
 {
-  "name": "express-typescript-seed",
+  "name": "express-typescript",
   "version": "1.0.0",
   "private": false,
-  "author": "Kevin Kolz <kckolz@gmail.com>",
+  "author": "",
   "scripts": {
     "start": "yarn run build && yarn run serve",
     "test": "yarn run build && rimraf tests/sqlite.db && cross-env NODE_ENV=test jest --forceExit --verbose ./dist/tests/users.test.js",
@@ -15,7 +15,8 @@
     "sqlz:migrate": "./node_modules/.bin/sequelize db:migrate",
     "sqlz:undo": "./node_modules/.bin/sequelize db:migrate:undo",
     "sqlz:new": "./node_modules/.bin/sequelize migration:create",
-    "sqlz:seed": "./node_modules/.bin/sequelize db:seed:all"
+    "sqlz:seed": "./node_modules/.bin/sequelize db:seed:all",
+    "sqlz:seed:create": "node_modules/.bin/sequelize  seed:generate"
   },
   "dependencies": {
     "amqplib": "^0.5.2",
@@ -74,7 +75,7 @@
     "@types/supertest": "^2.0.4",
     "jest": "^22.0.6",
     "passport-debug": "^0.1.15",
-    "sqlite3": "^3.1.13",
+    "sqlite3": "^4.0.2",
     "supertest": "^3.0.0",
     "ts-node": "^3.3.0",
     "tsc-watch": "^1.0.29",

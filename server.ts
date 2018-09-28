@@ -62,16 +62,12 @@ export class Server {
             // Initialize Database then bootstrap application
             try {
                 await Server.initializeDatabase();
-               // create a user to login.
-               // const user = new UserManager(); 
-               // user.createUser('admin@gmail.com','99032', 'admin', 'Admin', RoleEnum.ADMIN, '');
-               logger.error(" something very dangerous happened serverstarted");
+                logger.debug("[STARTED] Database open for business!..");
             } catch(error) {
                 logger.error("Failed to initialize database", error);
             }
 
             return Server.app.listen(Server.app.get("port"));
-            console.log('LOGLARi nereye yaziyorsun');
             
         } catch(error) {
             throw new InternalServerError(error.message);
@@ -117,6 +113,14 @@ export class Server {
         //     }, stream: fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' }) || process.stderr
         // }));
 
-        Server.app.use(morgan('dev', {  "stream": logger.stream  }));
+        Server.app.use(morgan((tokens, req, res) => {
+            return [ 
+                req.user.firstName,
+                req.user.lastName,
+                tokens.method(req, res),
+                tokens.url(req, res),
+                tokens.status(req, res), 
+            ].join(' ');
+        }, {  "stream": logger.stream  }));
     }
 }
