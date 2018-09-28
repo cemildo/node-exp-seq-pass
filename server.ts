@@ -17,6 +17,7 @@ import {logger} from "./lib/logger";
 import morgan = require("morgan");
 import {UserManager} from "./managers/UserManager";
 import {RoleEnum} from "./models/enums/RoleEnum";
+import * as _ from 'lodash';
 
 // const amqplib = require('amqplib');
 
@@ -101,26 +102,18 @@ export class Server {
     }
 
     private static configureApp() {
-
-        // all environments
         Server.app.set("port", process.env.PORT || 3000);
         Server.app.use(bodyParser.urlencoded({ extended: true }));
         Server.app.use(bodyParser.json());
-        Server.app.use(compression());
-        // Server.app.use(morgan('dev', {
-        //     skip: function (req, res) {
-        //         return res.statusCode < 400;
-        //     }, stream: fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' }) || process.stderr
-        // }));
-
+        Server.app.use(compression()); 
         Server.app.use(morgan((tokens, req, res) => {
-            return [ 
-                req.user.firstName,
-                req.user.lastName,
-                tokens.method(req, res),
-                tokens.url(req, res),
-                tokens.status(req, res), 
-            ].join(' ');
+            return  [ 
+                        _.get(req, 'user.firstName'),
+                        _.get(req, 'user.lastName'),
+                        tokens.method(req, res),
+                        tokens.url(req, res),
+                        tokens.status(req, res) 
+                    ].join(' ');
         }, {  "stream": logger.stream  }));
     }
 }
